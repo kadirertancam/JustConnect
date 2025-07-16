@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustConnect V2 - Profesyonel Mesajlaşma</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .sidebar {
+            width: 320px;
+            background: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #34495e;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: #34495e;
+            border-bottom: 1px solid #4a5f7a;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3498db, #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-details h3 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .search-container {
+            padding: 15px 20px;
+            border-bottom: 1px solid #4a5f7a;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: none;
+            border-radius: 25px;
+            background: #34495e;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #95a5a6;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .chat-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-item:hover {
+            background: #34495e;
+        }
+
+        .chat-item.active {
+            background: #34495e;
+            border-left-color: #3498db;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-info h4 {
+            font-size: 15px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-info p {
+            font-size: 13px;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .chat-time {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .unread-count {
+            background: #e74c3c;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 11px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ecf0f1;
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-header-info h3 {
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .chat-header-info p {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            max-width: 70%;
+        }
+
+        .message.own {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .message.own .message-content {
+            background: #3498db;
+            color: white;
+        }
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            opacity: 0.6;
+            text-align: right;
+        }
+
+        .message.own .message-time {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .message-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            resize: none;
+            max-height: 100px;
+        }
+
+        .message-input:focus {
+            border-color: #3498db;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-btn {
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .input-btn:hover {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .send-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #2980b9;
+        }
+
+        .send-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            color: #7f8c8d;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #7f8c8d;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+        }
+
+        .file-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            color: #3498db;
+            font-size: 20px;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .file-size {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: absolute;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+                height: 100vh;
+            }
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            border: 2px solid white;
+        }
+
+        .status-online { background: #2ecc71; }
+        .status-away { background: #f39c12; }
+        .status-offline { background: #95a5a6; }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Örnek veriler
+        const initialChats = [
+            {
+                id: 1,
+                name: "Ahmet Yılmaz",
+                lastMessage: "Toplantı için hazırlandın mı?",
+                time: "14:30",
+                unread: 2,
+                avatar: "AY",
+                status: "online",
+                isTyping: false
+            },
+            {
+                id: 2,
+                name: "Proje Ekibi",
+                lastMessage: "Yeni tasarımlar paylaşıldı",
+                time: "13:45",
+                unread: 5,
+                avatar: "PE",
+                status: "online",
+                isTyping: false
+            },
+            {
+                id: 3,
+                name: "Müşteri Desteği",
+                lastMessage: "Sorununuz çözüldü mü?",
+                time: "12:20",
+                unread: 0,
+                avatar: "MD",
+                status: "away",
+                isTyping: false
+            },
+            {
+                id: 4,
+                name: "Fatma Özkan",
+                lastMessage: "Raporları gönderiyorum",
+                time: "11:15",
+                unread: 1,
+                avatar: "FÖ",
+                status: "online",
+                isTyping: true
+            },
+            {
+                id: 5,
+                name: "İK Departmanı",
+                lastMessage: "Yıllık izin talebiniz onaylandı",
+                time: "10:30",
+                unread: 0,
+                avatar: "İK",
+                status: "offline",
+                isTyping: false
+            }
+        ];
+
+        const initialMessages = {
+            1: [
+                {
+                    id: 1,
+                    text: "Merhaba! Yarınki toplantı için hazırlıklar nasıl gidiyor?",
+                    time: "14:25",
+                    sender: "other",
+                    avatar: "AY"
+                },
+                {
+                    id: 2,
+                    text: "Her şey hazır! Sunumumu da tamamladım. Sen nasılsın?",
+                    time: "14:27",
+                    sender: "own",
+                    avatar: "KE"
+                },
+                {
+                    id: 3,
+                    text: "Harika! Ben de son kontrolleri yapıyorum. Toplantı için hazırlandın mı?",
+                    time: "14:30",
+                    sender: "other",
+                    avatar: "AY"
+                }
+            ],
+            2: [
+                {
+                    id: 1,
+                    text: "Yeni UI tasarımları hazır. Herkesi kontrol etmeye davet ediyorum.",
+                    time: "13:40",
+                    sender: "other",
+                    avatar: "PE"
+                },
+                {
+                    id: 2,
+                    text: "Tasarımlar gerçekten güzel görünüyor! Özellikle renk paleti çok başarılı.",
+                    time: "13:42",
+                    sender: "own",
+                    avatar: "KE"
+                },
+                {
+                    id: 3,
+                    text: "Yeni tasarımlar paylaşıldı. Lütfen gözden geçirin.",
+                    time: "13:45",
+                    sender: "other",
+                    avatar: "PE"
+                }
+            ]
+        };
+
+        function JustConnect() {
+            const [chats, setChats] = useState(initialChats);
+            const [activeChat, setActiveChat] = useState(1);
+            const [messages, setMessages] = useState(initialMessages);
+            const [newMessage, setNewMessage] = useState("");
+            const [searchTerm, setSearchTerm] = useState("");
+            const [isDarkMode, setIsDarkMode] = useState(false);
+            const [isTyping, setIsTyping] = useState(false);
+            const messagesEndRef = useRef(null);
+            const fileInputRef = useRef(null);
+
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            };
+
+            useEffect(() => {
+                scrollToBottom();
+            }, [messages, activeChat]);
+
+            // Yazma simülasyonu
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setChats(prevChats => 
+                        prevChats.map(chat => ({
+                            ...chat,
+                            isTyping: Math.random() > 0.8 && chat.status === 'online'
+                        }))
+                    );
+                }, 3000);
+
+                return () => clearInterval(interval);
+            }, []);
+
+            const handleSendMessage = () => {
+                if (!newMessage.trim()) return;
+
+                const messageId = Date.now();
+                const currentTime = new Date().toLocaleTimeString('tr-TR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                const message = {
+                    id: messageId,
+                    text: newMessage,
+                    time: currentTime,
+                    sender: "own",
+                    avatar: "KE"
+                };
+
+                setMessages(prev => ({
+                    ...prev,
+                    [activeChat]: [...(prev[activeChat] || []), message]
+                }));
+
+                // Chat listesini güncelle
+                setChats(prev => 
+                    prev.map(chat => 
+                        chat.id === activeChat 
+                            ? { ...chat, lastMessage: newMessage, time: currentTime }
+                            : chat
+                    )
+                );
+
+                setNewMessage("");
+
+                // Otomatik yanıt simülasyonu
+                setTimeout(() => {
+                    const autoReply = {
+                        id: messageId + 1,
+                        text: "Mesajınız alındı! Kısa süre içinde yanıtlayacağım.",
+                        time: new Date().toLocaleTimeString('tr-TR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        }),
+                        sender: "other",
+                        avatar: chats.find(c => c.id === activeChat)?.avatar || "?"
+                    };
+
+                    setMessages(prev => ({
+                        ...prev,
+                        [activeChat]: [...(prev[activeChat] || []), autoReply]
+                    }));
+                }, 1500);
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            };
+
+            const handleFileUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const messageId = Date.now();
+                    const currentTime = new Date().toLocaleTimeString('tr-TR', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+
+                    const fileMessage = {
+                        id: messageId,
+                        text: `📎 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`,
+                        time: currentTime,
+                        sender: "own",
+                        avatar: "KE",
+                        type: "file",
+                        file: file
+                    };
+
+                    setMessages(prev => ({
+                        ...prev,
+                        [activeChat]: [...(prev[activeChat] || []), fileMessage]
+                    }));
+                }
+            };
+
+            const filteredChats = chats.filter(chat =>
+                chat.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            const currentChatMessages = messages[activeChat] || [];
+            const currentChat = chats.find(c => c.id === activeChat);
+
+            return (
+                <div className={`app-container ${isDarkMode ? 'dark' : ''}`}>
+                    <div className="sidebar">
+                        <div className="sidebar-header">
+                            <div className="logo">
+                                <i className="fas fa-comments"></i>
+                                JustConnect V2
+                            </div>
+                            <div className="user-info">
+                                <div className="avatar" style={{position: 'relative'}}>
+                                    KE
+                                    <div className="status-indicator status-online"></div>
+                                </div>
+                                <div className="user-details">
+                                    <h3>Kadir Ertan</h3>
+                                    <p>Çevrimiçi</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="search-container">
+                            <i className="fas fa-search search-icon"></i>
+                            <input
+                                type="text"
+                                className="search-input"
+                                placeholder="Sohbetlerde ara..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="chat-list">
+                            {filteredChats.map(chat => (
+                                <div
+                                    key={chat.id}
+                                    className={`chat-item ${chat.id === activeChat ? 'active' : ''}`}
+                                    onClick={() => setActiveChat(chat.id)}
+                                >
+                                    <div className="chat-avatar" style={{position: 'relative'}}>
+                                        {chat.avatar}
+                                        <div className={`status-indicator status-${chat.status}`}></div>
+                                    </div>
+                                    <div className="chat-info">
+                                        <h4>{chat.name}</h4>
+                                        <p>
+                                            {chat.isTyping ? (
+                                                <span style={{color: '#3498db'}}>
+                                                    <i className="fas fa-ellipsis-h"></i> yazıyor...
+                                                </span>
+                                            ) : chat.lastMessage}
+                                        </p>
+                                    </div>
+                                    <div className="chat-meta">
+                                        <div className="chat-time">{chat.time}</div>
+                                        {chat.unread > 0 && (
+                                            <div className="unread-count">{chat.unread}</div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="main-content">
+                        {currentChat && (
+                            <>
+                                <div className="chat-header">
+                                    <div className="chat-header-info">
+                                        <div className="chat-avatar" style={{position: 'relative'}}>
+                                            {currentChat.avatar}
+                                            <div className={`status-indicator status-${currentChat.status}`}></div>
+                                        </div>
+                                        <div>
+                                            <h3>{currentChat.name}</h3>
+                                            <p>
+                                                {currentChat.status === 'online' ? 'Çevrimiçi' : 
+                                                 currentChat.status === 'away' ? 'Uzakta' : 'Çevrimdışı'}
+                                                {currentChat.isTyping && ' • yazıyor...'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="chat-actions">
+                                        <button className="action-btn" title="Sesli arama">
+                                            <i className="fas fa-phone"></i>
+                                        </button>
+                                        <button className="action-btn" title="Video arama">
+                                            <i className="fas fa-video"></i>
+                                        </button>
+                                        <button className="action-btn" title="Daha fazla">
+                                            <i className="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="messages-container">
+                                    {currentChatMessages.map(message => (
+                                        <div key={message.id} className={`message ${message.sender}`}>
+                                            <div className="message-avatar">
+                                                {message.avatar}
+                                            </div>
+                                            <div className="message-content">
+                                                {message.type === 'file' ? (
+                                                    <div className="file-preview">
+                                                        <i className="fas fa-file file-icon"></i>
+                                                        <div className="file-info">
+                                                            <div className="file-name">{message.file?.name}</div>
+                                                            <div className="file-size">
+                                                                {message.file ? (message.file.size / 1024 / 1024).toFixed(2) + ' MB' : ''}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="message-text">{message.text}</div>
+                                                )}
+                                                <div className="message-time">{message.time}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {currentChat.isTyping && (
+                                        <div className="typing-indicator">
+                                            <div className="message-avatar">
+                                                {currentChat.avatar}
+                                            </div>
+                                            <div>
+                                                {currentChat.name} yazıyor
+                                                <div className="typing-dots">
+                                                    <div className="dot"></div>
+                                                    <div className="dot"></div>
+                                                    <div className="dot"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div ref={messagesEndRef} />
+                                </div>
+
+                                <div className="message-input-container">
+                                    <div className="input-actions">
+                                        <button 
+                                            className="input-btn" 
+                                            title="Dosya ekle"
+                                            onClick={() => fileInputRef.current?.click()}
+                                        >
+                                            <i className="fas fa-paperclip"></i>
+                                        </button>
+                                        <button className="input-btn" title="Emoji">
+                                            <i className="fas fa-smile"></i>
+                                        </button>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        style={{display: 'none'}}
+                                        onChange={handleFileUpload}
+                                    />
+                                    <textarea
+                                        className="message-input"
+                                        placeholder="Bir mesaj yazın..."
+                                        value={newMessage}
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        onKeyPress={handleKeyPress}
+                                        rows="1"
+                                    />
+                                    <button
+                                        className="send-btn"
+                                        onClick={handleSendMessage}
+                                        disabled={!newMessage.trim()}
+                                        title="Gönder"
+                                    >
+                                        <i className="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<JustConnect />, document.getElementById('root'));
+    </script>
+</body>
+</html>
