@@ -24,6 +24,7 @@ RUN addgroup -g 1001 -S nodejs && \
 
 # Copy source code
 COPY . .
+COPY database/connection.js /app/database/connection.js
 
 # Create necessary directories
 RUN mkdir -p logs uploads uploads/avatars uploads/thumbnails temp

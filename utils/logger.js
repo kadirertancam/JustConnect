@@ -59,16 +59,9 @@ const logger = winston.createLogger({
                 winston.format.timestamp(),
                 winston.format.json()
             )
-        }),
-        
-        // Daily rotate file transport
-        new winston.transports.DailyRotateFile({
-            filename: path.join(logsDir, 'app-%DATE%.log'),
-            datePattern: 'YYYY-MM-DD',
-            zippedArchive: true,
-            maxSize: '20m',
-            maxFiles: '14d'
         })
+        
+        // Removed DailyRotateFile - use the basic File transport instead
     ],
     
     // Handle uncaught exceptions

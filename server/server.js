@@ -9,23 +9,23 @@ const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
 
-// Import utilities and middleware
-const config = require('./config/config');
-const { connectDB } = require('./database/connection');
-const { setupSocketHandlers } = require('./socket/handlers');
+// Import utilities and middleware - FIXED PATHS
+const config = require('../config/config');
+const { connectDB } = require('../database/connection');
+const { setupSocketHandlers } = require('../socket/handlers');
 const { 
     errorHandler, 
     notFoundHandler, 
     initializeGlobalHandlers 
-} = require('./middleware/errorHandler');
-const { httpLogger, lifecycleLogger } = require('./utils/logger');
-const { emailService } = require('./utils/email');
+} = require('../middleware/errorHandler');
+const { httpLogger, lifecycleLogger } = require('../utils/logger');
+const { emailService } = require('../utils/email');
 
-// Import routes
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const chatRoutes = require('./routes/chats');
-const uploadRoutes = require('./routes/upload');
+// Import routes - FIXED PATHS
+const authRoutes = require('../routes/auth');
+const userRoutes = require('../routes/users');
+const chatRoutes = require('../routes/chats');
+const uploadRoutes = require('../routes/upload');
 
 const app = express();
 const server = http.createServer(app);
@@ -49,14 +49,14 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // HTTP request logging
 app.use(httpLogger);
 
-// Static file serving
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.static(path.join(__dirname, 'frontend')));
+// Static file serving - FIXED PATHS
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Health check endpoint
 app.get('/health', async (req, res) => {
     try {
-        const { healthCheck: dbHealth } = require('./database/connection');
+        const { healthCheck: dbHealth } = require('../database/connection');
         const dbStatus = await dbHealth();
         
         res.json({
@@ -104,9 +104,9 @@ app.get('/api/status', (req, res) => {
     });
 });
 
-// Serve main application
+// Serve main application - FIXED PATH
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // 404 handler
@@ -136,7 +136,7 @@ const gracefulShutdown = async (signal) => {
     
     // Close database connection
     try {
-        const { disconnectDB } = require('./database/connection');
+        const { disconnectDB } = require('../database/connection');
         await disconnectDB();
         console.log('✅ Database connection closed');
     } catch (error) {
@@ -163,10 +163,10 @@ const startServer = async () => {
         await connectDB();
         console.log('✅ Database connected');
         
-        // Create necessary directories
+        // Create necessary directories - FIXED PATHS
         const directories = ['uploads', 'uploads/avatars', 'uploads/thumbnails', 'logs', 'temp'];
         directories.forEach(dir => {
-            const dirPath = path.join(__dirname, dir);
+            const dirPath = path.join(__dirname, '..', dir);
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath, { recursive: true });
                 console.log(`📁 Created directory: ${dir}`);
@@ -175,7 +175,7 @@ const startServer = async () => {
         
         // Verify email configuration (optional)
         try {
-            const { verifyEmailConfig } = require('./utils/email');
+            const { verifyEmailConfig } = require('../utils/email');
             const emailConfigValid = await verifyEmailConfig();
             if (emailConfigValid) {
                 console.log('📧 Email service verified');
@@ -189,7 +189,7 @@ const startServer = async () => {
         // Seed database with initial data (development only)
         if (config.server.env === 'development') {
             try {
-                const { seedDatabase } = require('./database/connection');
+                const { seedDatabase } = require('../database/connection');
                 await seedDatabase();
                 console.log('🌱 Database seeded with initial data');
             } catch (error) {
