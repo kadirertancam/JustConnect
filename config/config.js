@@ -86,11 +86,44 @@ module.exports = {
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-          scriptSrc: ["'self'", "https://unpkg.com", "https://cdnjs.cloudflare.com"],
-          imgSrc: ["'self'", "data:", "https:"],
-          connectSrc: ["'self'", "ws:", "wss:"],
-          fontSrc: ["'self'", "https://cdnjs.cloudflare.com"]
+          styleSrc: [
+            "'self'", 
+            "'unsafe-inline'", 
+            "https://cdnjs.cloudflare.com",
+            "https://fonts.googleapis.com",
+            "https:"
+          ],
+          scriptSrc: [
+            "'self'", 
+            "'unsafe-inline'", // Required for inline React with Babel
+            "'unsafe-eval'",   // Required for Babel transpilation
+            "https://unpkg.com", 
+            "https://cdnjs.cloudflare.com",
+            "https:"
+          ],
+          imgSrc: [
+            "'self'", 
+            "data:", 
+            "https:",
+            "blob:"
+          ],
+          connectSrc: [
+            "'self'", 
+            "ws:", 
+            "wss:",
+            "https:"
+          ],
+          fontSrc: [
+            "'self'", 
+            "https://cdnjs.cloudflare.com",
+            "https://fonts.gstatic.com",
+            "https:"
+          ],
+          objectSrc: ["'none'"],
+          mediaSrc: ["'self'", "blob:"],
+          frameSrc: ["'none'"],
+          childSrc: ["'none'"],
+          workerSrc: ["'self'", "blob:"]
         }
       },
       crossOriginEmbedderPolicy: false

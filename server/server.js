@@ -51,8 +51,20 @@ app.use(httpLogger);
 
 // Static file serving - FIXED PATHS
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(express.static(path.join(__dirname, '../frontend')));
-
+app.use(express.static(path.join(__dirname, '../frontend'), {
+    index: false // index.html'i otomatik serve etmesin
+})); 
+// Favicon route
+app.get('/favicon.ico', (req, res) => {
+    // Send a simple transparent 1x1 pixel favicon or redirect to a real one
+    const faviconPath = path.join(__dirname, '../frontend/favicon.ico');
+    if (fs.existsSync(faviconPath)) {
+        res.sendFile(faviconPath);
+    } else {
+        // Send a minimal favicon response to prevent 404
+        res.status(204).end();
+    }
+});
 // Health check endpoint
 app.get('/health', async (req, res) => {
     try {

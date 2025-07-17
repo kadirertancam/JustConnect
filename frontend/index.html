@@ -22,6 +22,125 @@
             overflow: hidden;
         }
 
+        /* Auth Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .auth-logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+        }
+
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .auth-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-switch {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .auth-link {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Chat App Styles */
         .app-container {
             display: flex;
             height: 100vh;
@@ -77,6 +196,7 @@
             justify-content: center;
             font-size: 18px;
             font-weight: bold;
+            position: relative;
         }
 
         .user-details h3 {
@@ -89,9 +209,25 @@
             opacity: 0.7;
         }
 
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #95a5a6;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+            margin-left: auto;
+        }
+
+        .logout-btn:hover {
+            background: #34495e;
+            color: white;
+        }
+
         .search-container {
             padding: 15px 20px;
             border-bottom: 1px solid #4a5f7a;
+            position: relative;
         }
 
         .search-input {
@@ -107,10 +243,6 @@
 
         .search-input::placeholder {
             color: #95a5a6;
-        }
-
-        .search-container {
-            position: relative;
         }
 
         .search-icon {
@@ -207,6 +339,24 @@
             display: flex;
             flex-direction: column;
             background: #ecf0f1;
+        }
+
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ecf0f1;
+            text-align: center;
+        }
+
+        .welcome-content h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .welcome-content p {
+            color: #7f8c8d;
         }
 
         .chat-header {
@@ -385,67 +535,19 @@
             cursor: not-allowed;
         }
 
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            color: #7f8c8d;
-            font-size: 13px;
-            font-style: italic;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 3px;
-        }
-
-        .dot {
-            width: 4px;
-            height: 4px;
+        .status-indicator {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: #7f8c8d;
-            animation: typing 1.4s infinite ease-in-out;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            border: 2px solid white;
         }
 
-        .dot:nth-child(1) { animation-delay: -0.32s; }
-        .dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes typing {
-            0%, 80%, 100% { opacity: 0; }
-            40% { opacity: 1; }
-        }
-
-        .file-preview {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .file-icon {
-            color: #3498db;
-            font-size: 20px;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 500;
-            font-size: 13px;
-            margin-bottom: 2px;
-        }
-
-        .file-size {
-            font-size: 11px;
-            color: #6c757d;
-        }
+        .status-online { background: #2ecc71; }
+        .status-away { background: #f39c12; }
+        .status-offline { background: #95a5a6; }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -466,228 +568,391 @@
                 height: 100vh;
             }
         }
-
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            border: 2px solid white;
-        }
-
-        .status-online { background: #2ecc71; }
-        .status-away { background: #f39c12; }
-        .status-offline { background: #95a5a6; }
-
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef, createContext, useContext } = React;
 
-        // Örnek veriler
-        const initialChats = [
-            {
-                id: 1,
-                name: "Ahmet Yılmaz",
-                lastMessage: "Toplantı için hazırlandın mı?",
-                time: "14:30",
-                unread: 2,
-                avatar: "AY",
-                status: "online",
-                isTyping: false
+        // API Utilities
+        const API_BASE = '/api';
+
+        const api = {
+            post: async (endpoint, data) => {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
+                    },
+                    body: JSON.stringify(data)
+                });
+                return response.json();
             },
-            {
-                id: 2,
-                name: "Proje Ekibi",
-                lastMessage: "Yeni tasarımlar paylaşıldı",
-                time: "13:45",
-                unread: 5,
-                avatar: "PE",
-                status: "online",
-                isTyping: false
-            },
-            {
-                id: 3,
-                name: "Müşteri Desteği",
-                lastMessage: "Sorununuz çözüldü mü?",
-                time: "12:20",
-                unread: 0,
-                avatar: "MD",
-                status: "away",
-                isTyping: false
-            },
-            {
-                id: 4,
-                name: "Fatma Özkan",
-                lastMessage: "Raporları gönderiyorum",
-                time: "11:15",
-                unread: 1,
-                avatar: "FÖ",
-                status: "online",
-                isTyping: true
-            },
-            {
-                id: 5,
-                name: "İK Departmanı",
-                lastMessage: "Yıllık izin talebiniz onaylandı",
-                time: "10:30",
-                unread: 0,
-                avatar: "İK",
-                status: "offline",
-                isTyping: false
+            
+            get: async (endpoint) => {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: {
+                        'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
+                    }
+                });
+                return response.json();
             }
-        ];
-
-        const initialMessages = {
-            1: [
-                {
-                    id: 1,
-                    text: "Merhaba! Yarınki toplantı için hazırlıklar nasıl gidiyor?",
-                    time: "14:25",
-                    sender: "other",
-                    avatar: "AY"
-                },
-                {
-                    id: 2,
-                    text: "Her şey hazır! Sunumumu da tamamladım. Sen nasılsın?",
-                    time: "14:27",
-                    sender: "own",
-                    avatar: "KE"
-                },
-                {
-                    id: 3,
-                    text: "Harika! Ben de son kontrolleri yapıyorum. Toplantı için hazırlandın mı?",
-                    time: "14:30",
-                    sender: "other",
-                    avatar: "AY"
-                }
-            ],
-            2: [
-                {
-                    id: 1,
-                    text: "Yeni UI tasarımları hazır. Herkesi kontrol etmeye davet ediyorum.",
-                    time: "13:40",
-                    sender: "other",
-                    avatar: "PE"
-                },
-                {
-                    id: 2,
-                    text: "Tasarımlar gerçekten güzel görünüyor! Özellikle renk paleti çok başarılı.",
-                    time: "13:42",
-                    sender: "own",
-                    avatar: "KE"
-                },
-                {
-                    id: 3,
-                    text: "Yeni tasarımlar paylaşıldı. Lütfen gözden geçirin.",
-                    time: "13:45",
-                    sender: "other",
-                    avatar: "PE"
-                }
-            ]
         };
 
-        function JustConnect() {
-            const [chats, setChats] = useState(initialChats);
-            const [activeChat, setActiveChat] = useState(1);
-            const [messages, setMessages] = useState(initialMessages);
-            const [newMessage, setNewMessage] = useState("");
-            const [searchTerm, setSearchTerm] = useState("");
-            const [isDarkMode, setIsDarkMode] = useState(false);
-            const [isTyping, setIsTyping] = useState(false);
-            const messagesEndRef = useRef(null);
-            const fileInputRef = useRef(null);
+        // Auth Context
+        const AuthContext = createContext();
 
-            const scrollToBottom = () => {
-                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        const AuthProvider = ({ children }) => {
+            const [user, setUser] = useState(null);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const token = localStorage.getItem('token');
+                console.log('AuthProvider useEffect - token exists:', !!token);
+                
+                if (token) {
+                    // Verify token
+                    api.get('/auth/me')
+                        .then(response => {
+                            console.log('Token verification response:', response);
+                            if (response.success) {
+                                setUser(response.user);
+                                console.log('User set from token verification:', response.user);
+                            } else {
+                                localStorage.removeItem('token');
+                                console.log('Token verification failed, removing token');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Token verification failed:', error);
+                            localStorage.removeItem('token');
+                        })
+                        .finally(() => {
+                            setLoading(false);
+                        });
+                } else {
+                    setLoading(false);
+                }
+            }, []);
+
+            const login = async (credentials) => {
+                try {
+                    const response = await api.post('/auth/login', credentials);
+                    console.log('Login response:', response);
+                    
+                    if (response.success) {
+                        // Token'ı kontrol et
+                        const token = response.user.tokens?.accessToken;
+                        console.log('Token from response:', token);
+                        
+                        if (token) {
+                            localStorage.setItem('token', token);
+                            setUser(response.user);
+                            console.log('User set from login:', response.user);
+                            return { success: true };
+                        } else {
+                            console.error('No token in response');
+                            return { success: false, error: 'Token bulunamadı' };
+                        }
+                    }
+                    return { success: false, error: response.message || 'Giriş başarısız' };
+                } catch (error) {
+                    console.error('Login error:', error);
+                    return { success: false, error: 'Bağlantı hatası' };
+                }
             };
 
-            useEffect(() => {
-                scrollToBottom();
-            }, [messages, activeChat]);
+            const register = async (userData) => {
+                try {
+                    const response = await api.post('/auth/register', userData);
+                    console.log('Register response:', response);
+                    
+                    if (response.success) {
+                        const token = response.user.tokens?.accessToken;
+                        if (token) {
+                            localStorage.setItem('token', token);
+                            setUser(response.user);
+                            console.log('User set from register:', response.user);
+                            return { success: true };
+                        } else {
+                            return { success: false, error: 'Token bulunamadı' };
+                        }
+                    }
+                    return { success: false, error: response.message || 'Kayıt başarısız' };
+                } catch (error) {
+                    console.error('Register error:', error);
+                    return { success: false, error: 'Bağlantı hatası' };
+                }
+            };
 
-            // Yazma simülasyonu
-            useEffect(() => {
-                const interval = setInterval(() => {
-                    setChats(prevChats => 
-                        prevChats.map(chat => ({
-                            ...chat,
-                            isTyping: Math.random() > 0.8 && chat.status === 'online'
-                        }))
-                    );
-                }, 3000);
+            const logout = () => {
+                localStorage.removeItem('token');
+                setUser(null);
+                console.log('User logged out');
+            };
 
-                return () => clearInterval(interval);
+            const value = {
+                user,
+                login,
+                register,
+                logout,
+                loading
+            };
+
+            return React.createElement(AuthContext.Provider, { value }, children);
+        };
+
+        const useAuth = () => {
+            const context = useContext(AuthContext);
+            if (!context) {
+                throw new Error('useAuth must be used within an AuthProvider');
+            }
+            return context;
+        };
+
+        // Login Component
+        function LoginForm({ onRegisterClick }) {
+            const [credentials, setCredentials] = useState({ username: '', password: '' });
+            const [errors, setErrors] = useState({});
+            const [loading, setLoading] = useState(false);
+            const { login } = useAuth();
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setErrors({});
+                setLoading(true);
+
+                console.log('Attempting login with:', credentials);
+                const result = await login(credentials);
+                console.log('Login result:', result);
+                
+                if (!result.success) {
+                    setErrors({ general: result.error });
+                } else {
+                    // Login başarılı - state zaten useAuth context'inde güncellendi
+                    console.log('Login successful, redirecting...');
+                }
+                
+                setLoading(false);
+            };
+
+            return (
+                <div className="auth-card">
+                    <div className="auth-logo">
+                        <i className="fas fa-comments"></i> JustConnect V2
+                    </div>
+                    <p className="auth-subtitle">Profesyonel mesajlaşma platformuna hoş geldiniz</p>
+                    
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        {errors.general && (
+                            <div className="error-message">{errors.general}</div>
+                        )}
+                        
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                className={`form-input ${errors.username ? 'error' : ''}`}
+                                placeholder="Kullanıcı adı veya email"
+                                value={credentials.username}
+                                onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+                                required
+                            />
+                            {errors.username && <div className="error-message">{errors.username}</div>}
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                className={`form-input ${errors.password ? 'error' : ''}`}
+                                placeholder="Şifre"
+                                value={credentials.password}
+                                onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+                                required
+                            />
+                            {errors.password && <div className="error-message">{errors.password}</div>}
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className="auth-button"
+                            disabled={loading}
+                        >
+                            {loading ? <span className="loading"></span> : 'Giriş Yap'}
+                        </button>
+                    </form>
+
+                    <div className="auth-switch">
+                        Hesabınız yok mu? <a href="#" className="auth-link" onClick={onRegisterClick}>Kayıt Ol</a>
+                    </div>
+                </div>
+            );
+        }
+
+        // Register Component
+        function RegisterForm({ onLoginClick }) {
+            const [userData, setUserData] = useState({
+                username: '',
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: ''
+            });
+            const [errors, setErrors] = useState({});
+            const [loading, setLoading] = useState(false);
+            const { register } = useAuth();
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setErrors({});
+                setLoading(true);
+
+                console.log('Attempting register with:', userData);
+                const result = await register(userData);
+                console.log('Register result:', result);
+                
+                if (!result.success) {
+                    setErrors({ general: result.error });
+                } else {
+                    // Register başarılı - state zaten useAuth context'inde güncellendi
+                    console.log('Register successful, redirecting...');
+                }
+                
+                setLoading(false);
+            };
+
+            return (
+                <div className="auth-card">
+                    <div className="auth-logo">
+                        <i className="fas fa-comments"></i> JustConnect V2
+                    </div>
+                    <p className="auth-subtitle">Yeni hesap oluşturun</p>
+                    
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        {errors.general && (
+                            <div className="error-message">{errors.general}</div>
+                        )}
+                        
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                className={`form-input ${errors.firstName ? 'error' : ''}`}
+                                placeholder="Ad"
+                                value={userData.firstName}
+                                onChange={(e) => setUserData({...userData, firstName: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                className={`form-input ${errors.lastName ? 'error' : ''}`}
+                                placeholder="Soyad"
+                                value={userData.lastName}
+                                onChange={(e) => setUserData({...userData, lastName: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                className={`form-input ${errors.username ? 'error' : ''}`}
+                                placeholder="Kullanıcı adı"
+                                value={userData.username}
+                                onChange={(e) => setUserData({...userData, username: e.target.value})}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="email"
+                                className={`form-input ${errors.email ? 'error' : ''}`}
+                                placeholder="Email"
+                                value={userData.email}
+                                onChange={(e) => setUserData({...userData, email: e.target.value})}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                className={`form-input ${errors.password ? 'error' : ''}`}
+                                placeholder="Şifre (min 6 karakter)"
+                                value={userData.password}
+                                onChange={(e) => setUserData({...userData, password: e.target.value})}
+                                required
+                            />
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className="auth-button"
+                            disabled={loading}
+                        >
+                            {loading ? <span className="loading"></span> : 'Kayıt Ol'}
+                        </button>
+                    </form>
+
+                    <div className="auth-switch">
+                        Zaten hesabınız var mı? <a href="#" className="auth-link" onClick={onLoginClick}>Giriş Yap</a>
+                    </div>
+                </div>
+            );
+        }
+
+        // Chat Application
+        function ChatApp() {
+            const { user, logout } = useAuth();
+            const [chats, setChats] = useState([]);
+            const [activeChat, setActiveChat] = useState(null);
+            const [messages, setMessages] = useState([]);
+            const [newMessage, setNewMessage] = useState("");
+
+            // User null check
+            if (!user) {
+                return (
+                    <div className="auth-container">
+                        <div className="auth-card">
+                            <div className="loading"></div>
+                            <p>Kullanıcı bilgileri yükleniyor...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            useEffect(() => {
+                // Load user's chats
+                api.get('/chats')
+                    .then(response => {
+                        if (response.success) {
+                            setChats(response.chats);
+                        }
+                    })
+                    .catch(console.error);
             }, []);
 
             const handleSendMessage = () => {
-                if (!newMessage.trim()) return;
+                if (!newMessage.trim() || !activeChat) return;
 
-                const messageId = Date.now();
-                const currentTime = new Date().toLocaleTimeString('tr-TR', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-
-                const message = {
-                    id: messageId,
-                    text: newMessage,
-                    time: currentTime,
-                    sender: "own",
-                    avatar: "KE"
+                const messageData = {
+                    content: {
+                        text: newMessage,
+                        type: 'text'
+                    }
                 };
 
-                setMessages(prev => ({
-                    ...prev,
-                    [activeChat]: [...(prev[activeChat] || []), message]
-                }));
-
-                // Chat listesini güncelle
-                setChats(prev => 
-                    prev.map(chat => 
-                        chat.id === activeChat 
-                            ? { ...chat, lastMessage: newMessage, time: currentTime }
-                            : chat
-                    )
-                );
-
-                setNewMessage("");
-
-                // Otomatik yanıt simülasyonu
-                setTimeout(() => {
-                    const autoReply = {
-                        id: messageId + 1,
-                        text: "Mesajınız alındı! Kısa süre içinde yanıtlayacağım.",
-                        time: new Date().toLocaleTimeString('tr-TR', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                        }),
-                        sender: "other",
-                        avatar: chats.find(c => c.id === activeChat)?.avatar || "?"
-                    };
-
-                    setMessages(prev => ({
-                        ...prev,
-                        [activeChat]: [...(prev[activeChat] || []), autoReply]
-                    }));
-                }, 1500);
+                api.post(`/chats/${activeChat.id}/messages`, messageData)
+                    .then(response => {
+                        if (response.success) {
+                            setMessages(prev => [...prev, response.message]);
+                            setNewMessage("");
+                        }
+                    })
+                    .catch(console.error);
             };
 
             const handleKeyPress = (e) => {
@@ -697,41 +962,8 @@
                 }
             };
 
-            const handleFileUpload = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const messageId = Date.now();
-                    const currentTime = new Date().toLocaleTimeString('tr-TR', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                    });
-
-                    const fileMessage = {
-                        id: messageId,
-                        text: `📎 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`,
-                        time: currentTime,
-                        sender: "own",
-                        avatar: "KE",
-                        type: "file",
-                        file: file
-                    };
-
-                    setMessages(prev => ({
-                        ...prev,
-                        [activeChat]: [...(prev[activeChat] || []), fileMessage]
-                    }));
-                }
-            };
-
-            const filteredChats = chats.filter(chat =>
-                chat.name.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-
-            const currentChatMessages = messages[activeChat] || [];
-            const currentChat = chats.find(c => c.id === activeChat);
-
             return (
-                <div className={`app-container ${isDarkMode ? 'dark' : ''}`}>
+                <div className="app-container">
                     <div className="sidebar">
                         <div className="sidebar-header">
                             <div className="logo">
@@ -740,13 +972,16 @@
                             </div>
                             <div className="user-info">
                                 <div className="avatar" style={{position: 'relative'}}>
-                                    KE
+                                    {user?.avatar || user?.firstName?.charAt(0) || user?.username?.charAt(0) || 'U'}
                                     <div className="status-indicator status-online"></div>
                                 </div>
                                 <div className="user-details">
-                                    <h3>Kadir Ertan</h3>
+                                    <h3>{user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.username || 'Kullanıcı'}</h3>
                                     <p>Çevrimiçi</p>
                                 </div>
+                                <button className="logout-btn" onClick={logout} title="Çıkış Yap">
+                                    <i className="fas fa-sign-out-alt"></i>
+                                </button>
                             </div>
                         </div>
 
@@ -756,36 +991,27 @@
                                 type="text"
                                 className="search-input"
                                 placeholder="Sohbetlerde ara..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
 
                         <div className="chat-list">
-                            {filteredChats.map(chat => (
+                            {chats.map(chat => (
                                 <div
                                     key={chat.id}
-                                    className={`chat-item ${chat.id === activeChat ? 'active' : ''}`}
-                                    onClick={() => setActiveChat(chat.id)}
+                                    className={`chat-item ${chat.id === activeChat?.id ? 'active' : ''}`}
+                                    onClick={() => setActiveChat(chat)}
                                 >
-                                    <div className="chat-avatar" style={{position: 'relative'}}>
+                                    <div className="chat-avatar">
                                         {chat.avatar}
-                                        <div className={`status-indicator status-${chat.status}`}></div>
                                     </div>
                                     <div className="chat-info">
                                         <h4>{chat.name}</h4>
-                                        <p>
-                                            {chat.isTyping ? (
-                                                <span style={{color: '#3498db'}}>
-                                                    <i className="fas fa-ellipsis-h"></i> yazıyor...
-                                                </span>
-                                            ) : chat.lastMessage}
-                                        </p>
+                                        <p>{chat.lastMessage?.text || 'Henüz mesaj yok'}</p>
                                     </div>
                                     <div className="chat-meta">
-                                        <div className="chat-time">{chat.time}</div>
-                                        {chat.unread > 0 && (
-                                            <div className="unread-count">{chat.unread}</div>
+                                        <div className="chat-time">{chat.lastMessage?.time}</div>
+                                        {chat.unreadCount > 0 && (
+                                            <div className="unread-count">{chat.unreadCount}</div>
                                         )}
                                     </div>
                                 </div>
@@ -794,21 +1020,16 @@
                     </div>
 
                     <div className="main-content">
-                        {currentChat && (
+                        {activeChat ? (
                             <>
                                 <div className="chat-header">
                                     <div className="chat-header-info">
-                                        <div className="chat-avatar" style={{position: 'relative'}}>
-                                            {currentChat.avatar}
-                                            <div className={`status-indicator status-${currentChat.status}`}></div>
+                                        <div className="chat-avatar">
+                                            {activeChat.avatar}
                                         </div>
                                         <div>
-                                            <h3>{currentChat.name}</h3>
-                                            <p>
-                                                {currentChat.status === 'online' ? 'Çevrimiçi' : 
-                                                 currentChat.status === 'away' ? 'Uzakta' : 'Çevrimdışı'}
-                                                {currentChat.isTyping && ' • yazıyor...'}
-                                            </p>
+                                            <h3>{activeChat.name}</h3>
+                                            <p>Çevrimiçi</p>
                                         </div>
                                     </div>
                                     <div className="chat-actions">
@@ -825,66 +1046,31 @@
                                 </div>
 
                                 <div className="messages-container">
-                                    {currentChatMessages.map(message => (
-                                        <div key={message.id} className={`message ${message.sender}`}>
+                                    {messages.map(message => (
+                                        <div key={message.id} className={`message ${message.sender === user?.id ? 'own' : ''}`}>
                                             <div className="message-avatar">
-                                                {message.avatar}
+                                                {message.sender === user?.id ? 
+                                                    (user?.avatar || user?.firstName?.charAt(0) || 'U') : 
+                                                    (activeChat?.avatar || 'A')
+                                                }
                                             </div>
                                             <div className="message-content">
-                                                {message.type === 'file' ? (
-                                                    <div className="file-preview">
-                                                        <i className="fas fa-file file-icon"></i>
-                                                        <div className="file-info">
-                                                            <div className="file-name">{message.file?.name}</div>
-                                                            <div className="file-size">
-                                                                {message.file ? (message.file.size / 1024 / 1024).toFixed(2) + ' MB' : ''}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="message-text">{message.text}</div>
-                                                )}
-                                                <div className="message-time">{message.time}</div>
+                                                <div className="message-text">{message.content.text}</div>
+                                                <div className="message-time">{new Date(message.createdAt).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</div>
                                             </div>
                                         </div>
                                     ))}
-                                    {currentChat.isTyping && (
-                                        <div className="typing-indicator">
-                                            <div className="message-avatar">
-                                                {currentChat.avatar}
-                                            </div>
-                                            <div>
-                                                {currentChat.name} yazıyor
-                                                <div className="typing-dots">
-                                                    <div className="dot"></div>
-                                                    <div className="dot"></div>
-                                                    <div className="dot"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div ref={messagesEndRef} />
                                 </div>
 
                                 <div className="message-input-container">
                                     <div className="input-actions">
-                                        <button 
-                                            className="input-btn" 
-                                            title="Dosya ekle"
-                                            onClick={() => fileInputRef.current?.click()}
-                                        >
+                                        <button className="input-btn" title="Dosya ekle">
                                             <i className="fas fa-paperclip"></i>
                                         </button>
                                         <button className="input-btn" title="Emoji">
                                             <i className="fas fa-smile"></i>
                                         </button>
                                     </div>
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        style={{display: 'none'}}
-                                        onChange={handleFileUpload}
-                                    />
                                     <textarea
                                         className="message-input"
                                         placeholder="Bir mesaj yazın..."
@@ -903,13 +1089,57 @@
                                     </button>
                                 </div>
                             </>
+                        ) : (
+                            <div className="welcome-screen">
+                                <div className="welcome-content">
+                                    <h2>JustConnect V2'ye Hoş Geldiniz</h2>
+                                    <p>Bir sohbet seçin ve mesajlaşmaya başlayın</p>
+                                </div>
+                            </div>
                         )}
                     </div>
                 </div>
             );
         }
 
-        ReactDOM.render(<JustConnect />, document.getElementById('root'));
+        // Main App Component
+        function App() {
+            const [isRegister, setIsRegister] = useState(false);
+            const { user, loading } = useAuth();
+
+            console.log('App render - user:', user, 'loading:', loading, 'isRegister:', isRegister);
+
+            if (loading) {
+                return (
+                    <div className="auth-container">
+                        <div className="auth-card">
+                            <div className="loading"></div>
+                            <p>Yükleniyor...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (!user) {
+                return (
+                    <div className="auth-container">
+                        {isRegister ? (
+                            <RegisterForm onLoginClick={() => setIsRegister(false)} />
+                        ) : (
+                            <LoginForm onRegisterClick={() => setIsRegister(true)} />
+                        )}
+                    </div>
+                );
+            }
+
+            console.log('Rendering ChatApp for user:', user.username);
+            return <ChatApp />;
+        }
+
+        ReactDOM.render(
+            React.createElement(AuthProvider, null, React.createElement(App)),
+            document.getElementById('root')
+        );
     </script>
 </body>
 </html>
